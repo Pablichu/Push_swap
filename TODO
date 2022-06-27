@@ -1,0 +1,32 @@
+Ordenar:
+	1		DONE
+	2		DONE
+	3		DONE
+	5		DONE
+	100		DONE
+	500		DONE
+
+- $ARG 34 000000000000000000005435 8 "340 21 -  -1000"
+
+	/*
+	t_num	*aux;
+	t_list	*easy;
+	printf("El stk_b\n");
+	easy = stk_b;
+	while (easy)
+	{
+		aux = easy->content;
+		printf("%d\n", aux->num);
+		easy = easy->next;
+	}
+	printf("El stk_a\n");
+	easy = *stk_a;
+	while (easy)
+	{
+		aux = easy->content;
+		printf("%d\n", aux->num);
+		easy = easy->next;
+	}
+	printf("I AM DONE\n");
+	exit(0);
+	*/

@@ -1,0 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sorter_chunks_push.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pmira-pe <pmira-pe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/08 20:11:52 by pmira-pe          #+#    #+#             */
+/*   Updated: 2021/06/15 20:21:16 by pmira-pe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "h_push_swap.h"
+
+static int	small(int *num, int size)
+{
+	int	i;
+	int	pos;
+	int	small;
+
+	i = 0;
+	pos = 0;
+	small = INT_MAX;
+	while (i < size)
+	{
+		if (num[i] < small)
+		{
+			small = num[i];
+			pos = i;
+		}
+		i++;
+	}
+	return (pos);
+}
+
+static void	scanning_chunk(int stk_size, int chnum, int *chunk, int *num)
+{
+	int	j;
+	int	i;
+
+	j = 1;
+	chunk[0] = num[small(num, stk_size)];
+	while (j < chnum)
+	{
+		chunk[j] = INT_MAX;
+		i = 0;
+		while (i < stk_size)
+		{
+			if ((num[i] < chunk[j]) && (num[i] > chunk[j - 1]))
+				chunk[j] = num[i];
+			i++;
+		}
+		j++;
+	}
+}
+
+void	chunks_workout(t_list **stk_a, t_list **stk_b, int *num, int chnum)
+{
+	int	*chunk;
+	int	stk_size;
+	int	j;
+
+	chunk = (int *)malloc(chnum * sizeof(int));
+	if (!chunk)
+		malloc_fail();
+	stk_size = ft_lstsize(*stk_a);
+	scanning_chunk(stk_size, chnum, chunk, num);
+	j = chnum;
+	while (j)
+	{
+		moving_n_pushing_a(stk_a, hold(chunk, num, stk_size, chnum));
+		operator_commands(stk_a, stk_b, "pb");
+		num_lst(*stk_a, num);
+		j--;
+		stk_size--;
+	}
+	free(chunk);
+}
